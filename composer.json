@@ -1,0 +1,7 @@
+{
+  "name": "drupal/sendgrid",
+  "type": "drupal-module",
+  "require": {
+    "sendgrid/sendgrid": "~5.0"
+  }
+}

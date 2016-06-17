@@ -1,0 +1,29 @@
+services:
+  sendgrid.service:
+    class: Drupal\sendgrid\SendgridService
+    arguments: ['@sendgrid.api', '@config.factory', '@logger.factory']
+
+  sendgrid.api:
+    class: Drupal\sendgrid\SendgridAPI
+    arguments: ['@config.factory', '@logger.factory']
+
+  sendgrid.test.service:
+    class: Drupal\sendgrid\SendgridTestService
+    arguments: ['@sendgrid.test.api', '@config.factory', '@logger.factory']
+
+  sendgrid.test.api:
+    class: Drupal\sendgrid\SendgridTestAPI
+    arguments: ['@config.factory', '@logger.factory']
+
+  cache.sendgrid:
+    class: Drupal\Core\Cache\CacheBackendInterface
+    tags:
+      - { name: cache.bin }
+    factory: cache_factory:get
+    arguments: ['sendgrid']
+
+  access_check.sendgrid.configuration:
+    class: Drupal\sendgrid\Access\SendgridConfigurationAccessCheck
+    arguments: ['@current_user']
+    tags:
+      - { name: access_check, applies_to: _sendgrid_configuration_access_check }

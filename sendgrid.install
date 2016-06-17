@@ -1,0 +1,78 @@
+<?php
+
+/**
+ * @file
+ * Install, update, and uninstall functions for the sendgrid module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function sendgrid_install() {
+  // Set default values for config which require dynamic values.
+  \Drupal::configFactory()->getEditable('sendgrid.settings')
+    ->set('sendgrid_from_email', \Drupal::config('system.site')->get('mail'))
+    ->set('sendgrid_from_name', \Drupal::config('system.site')->get('site_name'))
+    ->save();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function sendgrid_uninstall() {
+  // Delete other variables:
+  $config = \Drupal::service('config.factory')->getEditable('sendgrid.settings');
+  $config->clear('sendgrid_analytics_campaign')->save();
+  $config->clear('sendgrid_analytics_domains')->save();
+  $config->clear('sendgrid_api_key')->save();
+  $config->clear('sendgrid_filter_format')->save();
+  $config->clear('sendgrid_from_email')->save();
+  $config->clear('sendgrid_from_name')->save();
+  $config->clear('sendgrid_mail_template')->save();
+  $config->clear('sendgrid_test_address')->save();
+  $config->clear('sendgrid_test_body')->save();
+  $config->clear('sendgrid_track_clicks')->save();
+  $config->clear('sendgrid_track_opens')->save();
+  $config->clear('sendgrid_url_strip_qs')->save();
+  $config->clear('sendgrid_process_async')->save();
+
+  $queue = \Drupal::queue(SENDGRID_QUEUE);
+  $queue->deleteQueue();
+}
+
+/**
+ * Implements hook_requirements()
+ */
+function sendgrid_requirements($phase) {
+  $requirements = array(
+    'sendgrid' => array(
+      'title' => t('Sendgrid'),
+    ),
+  );
+
+  if ($phase == 'runtime') {
+    $config = \Drupal::config('sendgrid.settings');
+
+    // Check for Mandrill library.
+    if (\Doctrine\Common\ClassLoader::classExists($config->get('sendgrid_api_classname'))) {
+      $requirements['sendgrid']['description'] = t('The Sendgrid library is installed correctly.');
+      $requirements['sendgrid']['severity'] = REQUIREMENT_OK;
+    }
+    else {
+      $requirements['sendgrid']['description'] = t('The Sendgrid library has not been installed correctly.');
+      $requirements['sendgrid']['severity'] = REQUIREMENT_ERROR;
+    }
+
+    // Check for the Mail System module.
+    if (\Drupal::moduleHandler()->moduleExists('mailsystem')) {
+      $requirements['sendgrid']['description'] = t('The Mail System module is installed.');
+      $requirements['sendgrid']['severity'] = REQUIREMENT_OK;
+    }
+    else {
+      $requirements['sendgrid']['description'] = t('The Mail System module is required for Sendgrid.');
+      $requirements['sendgrid']['severity'] = REQUIREMENT_ERROR;
+    }
+  }
+
+  return $requirements;
+}

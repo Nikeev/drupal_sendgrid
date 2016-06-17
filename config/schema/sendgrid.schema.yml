@@ -1,0 +1,32 @@
+sendgrid.settings:
+  type: config_object
+  label: 'Sendgrid settings'
+  mapping:
+    sendgrid_from_name:
+      type: string
+      label: 'Sender name'
+    sendgrid_from_email:
+      type: string
+      label: 'Sender email'
+    sendgrid_filter_format:
+      type: string
+    sendgrid_url_strip_qs:
+      type: boolean
+    sendgrid_batch_log_queued:
+      type: boolean
+    sendgrid_queue_worker_timeout:
+      type: integer
+    sendgrid_log_defaulted_sends:
+      type: boolean
+    sendgrid_api_key:
+      type: string
+    sendgrid_api_timeout:
+      type: integer
+    sendgrid_api_classname:
+      type: string
+    sendgrid_mail_template:
+      type: string
+    sendgrid_process_async:
+      type: boolean
+    sendgrid_queue_tags:
+      type: string

@@ -1,0 +1,11 @@
+name: Sendgrid
+type: module
+description: 'Allow for site emails to be sent through Sendgrid.'
+package: Sendgrid
+core: '8.x'
+
+configure: sendgrid.admin
+
+dependencies:
+  - mailsystem
+

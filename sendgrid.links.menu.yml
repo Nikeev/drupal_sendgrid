@@ -1,0 +1,4 @@
+sendgrid.admin:
+  route_name: sendgrid.admin
+  title: 'Sendgrid'
+  parent: system.admin_config_services

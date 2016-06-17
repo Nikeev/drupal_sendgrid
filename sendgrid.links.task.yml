@@ -1,0 +1,9 @@
+sendgrid.admin:
+  route_name: sendgrid.admin
+  base_route: sendgrid.admin
+  title: 'Settings'
+
+sendgrid.test:
+  title: 'Send Test Email'
+  route_name: sendgrid.test
+  base_route: sendgrid.admin

@@ -1,0 +1,4 @@
+administer sendgrid:
+  title: Administer Sendgrid
+  description: Perform administration tasks for the Sendgrid email service.
+  restrict access: true
