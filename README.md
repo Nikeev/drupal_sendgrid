@@ -16,8 +16,8 @@ Or you can also specify mail tags to send with queue and other mails will be sen
 ## INSTALLATION
 
 This module require:
-Mail System (https://drupal.org/project/mailsystem)
-SendGrid PHP Library (https://github.com/sendgrid/sendgrid-php)
+* Mail System (https://drupal.org/project/mailsystem)
+* SendGrid PHP Library (https://github.com/sendgrid/sendgrid-php)
 
 Optionally:
 Composer Manager (https://drupal.org/project/composer_manager)
