@@ -1,7 +1,5 @@
-sendgrid_subaccount: ''
 sendgrid_filter_format: ''
 sendgrid_url_strip_qs: false
-sendgrid_analytics_campaign: ''
 sendgrid_batch_log_queued: true
 sendgrid_queue_worker_timeout: 30
 sendgrid_log_defaulted_sends: false
