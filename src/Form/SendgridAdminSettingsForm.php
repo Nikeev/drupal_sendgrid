@@ -201,13 +201,20 @@ class SendgridAdminSettingsForm extends ConfigFormBase {
 //        '#description' => t('Whether or not to strip the query string from URLs when aggregating tracked URL data.'),
 //        '#default_value' => $config->get('sendgrid_url_strip_qs'),
 //      );
+      if (\Drupal::moduleHandler()->moduleExists('dblog')) {
+        $log_url = Url::fromRoute('dblog.overview');
+      } elseif (\Drupal::moduleHandler()->moduleExists('syslog') && \Drupal::moduleHandler()->moduleExists('help')) {
+        $log_url = new Url('help.page', ['name' => 'syslog']);
+      } else {
+        $log_url = 'https://drupal.org/page-that-needs-to-exist-on-simply-enabling-dblog-syslog-or-other-compatible-logger';
+      }
       $form['send_options']['sendgrid_log_defaulted_sends'] = array(
         '#title' => t('Log sends from module/key pairs that are not registered independently in mailsystem.'),
         '#type' => 'checkbox',
         '#description' => t('If you select Sendgrid as the site-wide default email sender in %mailsystem and check this box, any messages that are sent through Sendgrid using module/key pairs that are not specifically registered in mailsystem will cause a message to be written to the %systemlog (type: Sendgrid, severity: info). Enable this to identify keys and modules for automated emails for which you would like to have more granular control. It is not recommended to leave this box checked for extended periods, as it slows Sendgrid and can clog your logs.',
           array(
             '%mailsystem' => $this->l(t('Mail System'), $mailSystemPath),
-            '%systemlog' => $this->l(t('system log'), Url::fromRoute('dblog.overview')),
+            '%systemlog' => $this->l(t('system log'), $log_url),
           )),
         '#default_value' => $config->get('sendgrid_log_defaulted_sends'),
       );
