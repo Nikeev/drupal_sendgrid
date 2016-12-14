@@ -25,5 +25,5 @@ Composer Manager (https://drupal.org/project/composer_manager)
 You could install and enable SendGrid PHP Library with Composer Manager.
 If not, module will try to find sendgrid/vendor/autoload.php file and SendGrid class.
 
-Then enable module as usual and enter SendGrid API key in module settings. And enable module to be used in Mail System settings.
+Then enable module as usual and enter your SendGrid API key in the module settings. Also configure your site's Mail System settings to use Sendgrid.
 
